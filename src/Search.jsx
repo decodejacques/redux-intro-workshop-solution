@@ -1,6 +1,14 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 class UnconnectedSearch extends Component {
+    constructor(props) {
+        super(props)
+        // We're doing this with local state, but we could have done it with redux.
+        // The method you choose depends on personal preference.
+        this.state = {
+            showPriceFilter: false
+        }
+    }
     handleQuery = evt => {
         this.props.dispatch({ type: 'query', q: evt.target.value })
     }
@@ -18,6 +26,22 @@ class UnconnectedSearch extends Component {
     clearForm = () => {
         this.props.dispatch({ type: "clear-form" })
     }
+    displayPriceFilter = () => {
+        if (!this.state.showPriceFilter) return null
+        return (<div>
+            <div>
+                Maximum price
+                    <input type="text" onChange={this.handleMaximumPrice} value={this.props.maxPrice} />
+            </div>
+            <div>
+                Minimum price
+                    <input type="text" onChange={this.handleMinimumPrice} value={this.props.minPrice} />
+            </div>
+        </div>)
+    }
+    togglePriceRange = () => {
+        this.setState({ showPriceFilter: !this.state.showPriceFilter })
+    }
     render = () => {
         return (
             <div>
@@ -26,18 +50,12 @@ class UnconnectedSearch extends Component {
                     <input type="text" onChange={this.handleQuery} value={this.props.query} />
                 </div>
                 <div>
-                    Minimum price
-                    <input type="text" onChange={this.handleMinimumPrice} value={this.props.minPrice} />
-                </div>
-                <div>
-                    Maximum price
-                    <input type="text" onChange={this.handleMaximumPrice} value={this.props.maxPrice} />
-                </div>
-                <div>
                     In stock
                     <input type="checkbox" onChange={this.handleStockToggle} checked={this.props.stockChecked} />
                 </div>
+                {this.displayPriceFilter()}
                 <button type="button" onClick={this.clearForm}>Clear the form</button>
+                <button type="button" onClick={this.togglePriceRange}>Toggle price filters</button>
             </div>)
     }
 }
