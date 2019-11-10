@@ -4,7 +4,7 @@ import data from './data.js'
 class UnconnectedSearchResults extends Component {
     render = () => {
         let results = data.filter(item => {
-            return item.name.includes(this.props.query)
+            return item.name.includes(this.props.query) && item.price > this.props.minP && item.price < this.props.maxP
         })
         return (<div>
             {results.map(r => {
@@ -16,6 +16,8 @@ class UnconnectedSearchResults extends Component {
 let mapStateToProps = st => {
     return {
         query: st.searchQuery,
+        minP: st.min,
+        maxP: st.max
     }
 }
 let SearchResults = connect(mapStateToProps)(UnconnectedSearchResults)
