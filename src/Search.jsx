@@ -13,12 +13,10 @@ class UnconnectedSearch extends Component {
         this.props.dispatch({ type: 'query', q: evt.target.value })
     }
     handleMinimumPrice = evt => {
-        let price = parseInt(evt.target.value)
-        this.props.dispatch({ type: 'minimum-price', price: price })
+        this.props.dispatch({ type: 'minimum-price', price: evt.target.value })
     }
     handleMaximumPrice = evt => {
-        let price = parseInt(evt.target.value)
-        this.props.dispatch({ type: 'maximum-price', price: price })
+        this.props.dispatch({ type: 'maximum-price', price: evt.target.value })
     }
     handleStockToggle = evt => {
         this.props.dispatch({ type: 'only-in-stock', value: evt.target.checked })

@@ -4,9 +4,13 @@ import data from './data.js'
 class UnconnectedSearchResults extends Component {
     render = () => {
         let results = data.filter(item => {
+            let minimumPrice = parseInt(this.props.minP)
+            let maximumPrice = parseInt(this.props.maxP)
+            let minPriceCheck = !isNaN(minimumPrice) && item.price > minimumPrice
+            let maxPriceCheck = !isNaN(maximumPrice) && item.price < maximumPrice
             return item.name.includes(this.props.query) &&
-                item.price > this.props.minP &&
-                item.price < this.props.maxP &&
+                minPriceCheck &&
+                maxPriceCheck &&
                 item.inStock === this.props.stockedToggle
         })
         return (<div>
