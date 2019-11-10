@@ -1,4 +1,5 @@
 import { createStore } from "redux"
+let initialData = { searchQuery: "", min: 0, max: 100000, onlyInStock: false }
 let reducer = (state, action) => {
     if (action.type === "query") {
         return { ...state, searchQuery: action.q }
@@ -15,11 +16,14 @@ let reducer = (state, action) => {
             onlyInStock: action.value
         }
     }
+    if (action.type === "clear-form") {
+        return initialData
+    }
     return state
 }
 const store = createStore(
     reducer,
-    { searchQuery: "", min: 0, max: 100000, onlyInStock: false },
+    initialData,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 export default store 

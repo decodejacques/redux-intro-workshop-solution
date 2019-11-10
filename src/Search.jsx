@@ -15,6 +15,9 @@ class UnconnectedSearch extends Component {
     handleStockToggle = evt => {
         this.props.dispatch({ type: 'only-in-stock', value: evt.target.checked })
     }
+    clearForm = () => {
+        this.props.dispatch({ type: "clear-form" })
+    }
     render = () => {
         return (
             <div>
@@ -32,8 +35,9 @@ class UnconnectedSearch extends Component {
                 </div>
                 <div>
                     In stock
-                    <input type="checkbox" onChange={this.handleStockToggle} />
+                    <input type="checkbox" onChange={this.handleStockToggle} checked={this.props.stockChecked} />
                 </div>
+                <button type="button" onClick={this.clearForm}>Clear the form</button>
             </div>)
     }
 }
@@ -42,7 +46,7 @@ let mapStateToProps = st => {
         query: st.searchQuery,
         minPrice: st.min,
         maxPrice: st.max,
-        stockChecked: st.stockChecked
+        stockChecked: st.onlyInStock
     }
 }
 let Search = connect(mapStateToProps)(UnconnectedSearch)
